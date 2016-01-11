@@ -8,7 +8,7 @@
 
 #import "BannerLoopView.h"
 
-#define JumpTime     2
+#define JumpTime     5
 @interface BannerLoopView()<UIScrollViewDelegate>
 {
     UIScrollView *_scrollView;
@@ -123,7 +123,7 @@
     
     if (!_withViews) {
         
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < _totalPages; i++) {
             
             UIImage *img =  [loopArray objectAtIndex:i];
             
@@ -148,7 +148,7 @@
     }
     else
     {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < _totalPages; i++) {
             
             UIView *v =  [loopArray objectAtIndex:i];
             
