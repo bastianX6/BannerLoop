@@ -16,5 +16,6 @@
 @interface BannerLoopView : UIView
 - (id)initWithFrame:(CGRect)frame items:(NSArray*)items;
 @property(strong,nonatomic) id<BannerLoopDelegate> delegate;
+@property BOOL withViews;
 
 @end

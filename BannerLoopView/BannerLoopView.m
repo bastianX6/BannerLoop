@@ -54,12 +54,48 @@
         _curPage = 0;
         
         itemArray = items;
+        _withViews = NO;
         
         [self reloadData];
         
     }
     return self;
 }
+
+- (id)initWithFrame:(CGRect)frame andViews:(NSArray*)items
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+        _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        _scrollView.delegate = self;
+        _scrollView.contentSize = CGSizeMake(self.bounds.size.width * 3, self.bounds.size.height);
+        _scrollView.showsHorizontalScrollIndicator = NO;
+        _scrollView.contentOffset = CGPointMake(self.bounds.size.width, 0);
+        _scrollView.pagingEnabled = YES;
+        [self addSubview:_scrollView];
+        
+        _scrollView.backgroundColor = [UIColor purpleColor];
+        
+        CGRect rect = self.bounds;
+        rect.origin.y = rect.size.height - 30;
+        rect.size.height = 30;
+        _pageControl = [[UIPageControl alloc] initWithFrame:rect];
+        _pageControl.userInteractionEnabled = NO;
+        
+        [self addSubview:_pageControl];
+        
+        _curPage = 0;
+        
+        itemArray = items;
+        _withViews = YES;
+        
+        [self reloadData];
+        
+    }
+    return self;
+}
+
 - (void)reloadData
 {
     _totalPages = (int)[itemArray count];
@@ -84,28 +120,49 @@
     
     [self getDisplayImagesWithCurpage:_curPage];
     
-    for (int i = 0; i < 3; i++) {
+    
+    if (!_withViews) {
         
-        UIImage *img =  [loopArray objectAtIndex:i];
-        
-        UIImageView *v = [[UIImageView alloc]init];
-        
-        v.image  = img;
-        
-        v.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        
-       
-        
-        v.userInteractionEnabled = YES;
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(handleTap:)];
-        [v addGestureRecognizer:singleTap];
-       
-        v.frame = CGRectOffset(v.frame, v.frame.size.width * i, 0);
-        [_scrollView addSubview:v];
-        
-        
+        for (int i = 0; i < 3; i++) {
+            
+            UIImage *img =  [loopArray objectAtIndex:i];
+            
+            UIImageView *v = [[UIImageView alloc]init];
+            
+            v.image  = img;
+            
+            v.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+            
+            
+            
+            v.userInteractionEnabled = YES;
+            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(handleTap:)];
+            [v addGestureRecognizer:singleTap];
+            
+            v.frame = CGRectOffset(v.frame, v.frame.size.width * i, 0);
+            [_scrollView addSubview:v];
+            
+            
+        }
     }
+    else
+    {
+        for (int i = 0; i < 3; i++) {
+            
+            UIView *v =  [loopArray objectAtIndex:i];
+            
+            v.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+            v.userInteractionEnabled = YES;
+            
+            v.frame = CGRectOffset(v.frame, v.frame.size.width * i, 0);
+            [_scrollView addSubview:v];
+            
+            
+        }
+    }
+    
+    
     
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
     
