@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "BannerLoopView"
-  s.version      = "1.0.0"
+  s.version      = "1.0.2"
   s.summary      = "an infinite automatic scroll loop effect for ios."
 
   s.description  = <<-DESC
